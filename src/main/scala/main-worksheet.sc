@@ -62,11 +62,26 @@ val answer3 = palindromes.take(73).sum
 println(s"#3 - $answer3")
 
 // #4
+val NUMBERS = List(-1, -1, -2, -2, 1, -5, 1, 0, 1, 14, -8, 4, 5, -11, 13, 5, 7, -10, -4, 3, -6, 8, 6, 2, -9, -1, -4, 0)
 
-// your code goes here
+def getSets(numberList: List[Int]): Set[Set[Int]] = {
+  def loop(availableNumbers: List[Int], numbersInUse: List[Int], dispatch: Set[Set[Int]]): Set[Set[Int]] =
+    numbersInUse.length match {
+      case 3 =>
+        if (numbersInUse.sum == 0 && numbersInUse.nonEmpty) dispatch + numbersInUse.toSet
+        else dispatch + Set.empty
+      case _ =>
+        if (availableNumbers.nonEmpty)
+          loop(availableNumbers.tail, availableNumbers.head :: numbersInUse, dispatch) ++ loop(availableNumbers.tail, numbersInUse, dispatch)
+        else
+          Set.empty
+    }
+  loop(numberList, List.empty, Set.empty) - Set.empty
+}
 
-println(s"#4 - ${/*answer #4*/}")
+val answer4 = getSets(NUMBERS).size
 
+println(s"#4 - $answer4")
 // #5
 
 // your code goes here
