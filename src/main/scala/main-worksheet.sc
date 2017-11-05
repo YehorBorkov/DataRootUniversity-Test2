@@ -41,7 +41,7 @@ def buildBinary(sumsList: List[Int], resultBinary: List[Int]): List[Int] = {
     resultBinary
 }
 
-val result = buildBinary(sums, List.empty).reduceLeft(
+val answer2 = buildBinary(sums, List.empty).reduceLeft(
   (diff, curr) =>
     curr match {
       case 0 => diff - 1
@@ -49,13 +49,17 @@ val result = buildBinary(sums, List.empty).reduceLeft(
     }
 )
 
-println(s"#2 - $result")
+println(s"#2 - $answer2")
 
 // #3
 
-// your code goes here
+def palindromes: Stream[Int] =
+  for (palindromeNumber <- Stream.from(1) if palindromeNumber.toBinaryString equals palindromeNumber.toBinaryString.reverse)
+    yield palindromeNumber
 
-println(s"#3 - ${/*answer #3*/}")
+val answer3 = palindromes.take(73).sum
+
+println(s"#3 - $answer3")
 
 // #4
 
