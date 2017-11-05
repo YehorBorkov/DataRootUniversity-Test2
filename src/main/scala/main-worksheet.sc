@@ -5,12 +5,12 @@ val CIPHER = "GHMABGZ VKXTMXL LNVVXLL EBDX GHG-LMHI, XGMANLBTLMBV XYYHKM"
 val ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-def caesarDecipher(cipherdString: String, althabet: String): List[String] = {
+def caesarDecipher(cipheredString: String, althabet: String): List[String] = {
   val key = althabet.tail + althabet.head
   if (key.equals(ALPHABET))
     List.empty
   else
-    cipherdString.map(c => if (ALPHABET contains c) (key zip ALPHABET).toMap getOrElse(c, '~') else c) :: caesarDecipher(cipherdString, key)
+    cipheredString.map(c => if (ALPHABET contains c) (key zip ALPHABET).toMap getOrElse(c, '~') else c) :: caesarDecipher(cipheredString, key)
 }
 
 caesarDecipher(CIPHER, ALPHABET).foreach(println(_))
@@ -20,13 +20,13 @@ val answer1 = "NOTHING CREATES SUCCESS LIKE NON-STOP, ENTHUSIASTIC EFFORT"
 println(s"#1 - $answer1")
 
 // #2
-val NUMBERS_LIST = Source.fromFile("G:\\task2.txt")
+val NUMBERS_LIST_2 = Source.fromFile("E:\\Study\\DataRootUniversity\\Scala\\Test2\\task2.txt")
   .getLines
   .toList
   .map(_.reverse.toList.map(c => Integer.parseInt(c.toString)))
 
-val sums = NUMBERS_LIST.head
-  .zipAll(NUMBERS_LIST(1), 0, 0)
+val sums = NUMBERS_LIST_2.head
+  .zipAll(NUMBERS_LIST_2(1), 0, 0)
   .map{ case (a, b) => a + b }
 
 def buildBinary(sumsList: List[Int], resultBinary: List[Int]): List[Int] = {
@@ -82,8 +82,13 @@ def getSets(numberList: List[Int]): Set[Set[Int]] = {
 val answer4 = getSets(NUMBERS).size
 
 println(s"#4 - $answer4")
+
 // #5
+val NUMBERS_LIST_5 = Source.fromFile("E:\\Study\\DataRootUniversity\\Scala\\Test2\\task5.txt")
+  .getLines
+  .toList
+  .map(BigInt(_))
 
-// your code goes here
+val answer5 = NUMBERS_LIST_5.sum.toString.take(10)
 
-println(s"#5 - ${/*answer #5*/}")
+println(s"#5 - $answer5")
