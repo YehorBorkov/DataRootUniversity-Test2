@@ -4,7 +4,6 @@ import scala.io.Source
 val CIPHER = "GHMABGZ VKXTMXL LNVVXLL EBDX GHG-LMHI, XGMANLBTLMBV XYYHKM"
 val ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-
 def caesarDecipher(cipheredString: String, althabet: String): List[String] = {
   val key = althabet.tail + althabet.head
   if (key.equals(ALPHABET))
@@ -52,7 +51,6 @@ val answer2 = buildBinary(sums, List.empty).reduceLeft(
 println(s"#2 - $answer2")
 
 // #3
-
 def palindromes: Stream[Int] =
   for (palindromeNumber <- Stream.from(1) if palindromeNumber.toBinaryString equals palindromeNumber.toBinaryString.reverse)
     yield palindromeNumber
