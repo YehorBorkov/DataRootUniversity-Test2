@@ -4,15 +4,16 @@ import scala.io.Source
 val CIPHER = "GHMABGZ VKXTMXL LNVVXLL EBDX GHG-LMHI, XGMANLBTLMBV XYYHKM"
 val ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def caesarDecipher(cipheredString: String, althabet: String): List[String] = {
-  val key = althabet.tail + althabet.head
+def caesarDecipher(cipheredString: String, alphabet: String, dispatch: List[String]): List[String] = {
+  val key = alphabet.tail + alphabet.head
+  val dict = (key zip ALPHABET).toMap
   if (key.equals(ALPHABET))
-    List.empty
+    dispatch
   else
-    cipheredString.map(c => if (ALPHABET contains c) (key zip ALPHABET).toMap getOrElse(c, '~') else c) :: caesarDecipher(cipheredString, key)
+    caesarDecipher(cipheredString, key, cipheredString.map(c => dict.getOrElse(c, c)) +: dispatch)
 }
 
-caesarDecipher(CIPHER, ALPHABET).foreach(println(_))
+caesarDecipher(CIPHER, ALPHABET, List.empty).foreach(println(_))
 
 val answer1 = "NOTHING CREATES SUCCESS LIKE NON-STOP, ENTHUSIASTIC EFFORT"
 
@@ -60,24 +61,9 @@ val answer3 = palindromes.take(73).sum
 println(s"#3 - $answer3")
 
 // #4
-val NUMBERS = List(-1, -1, -2, -2, 1, -5, 1, 0, 1, 14, -8, 4, 5, -11, 13, 5, 7, -10, -4, 3, -6, 8, 6, 2, -9, -1, -4, 0)
+val NUMBERS_4 = List(-1, -1, -2, -2, 1, -5, 1, 0, 1, 14, -8, 4, 5, -11, 13, 5, 7, -10, -4, 3, -6, 8, 6, 2, -9, -1, -4, 0)
 
-def getSets(numberList: List[Int]): Set[Set[Int]] = {
-  def loop(availableNumbers: List[Int], numbersInUse: List[Int], dispatch: Set[Set[Int]]): Set[Set[Int]] =
-    numbersInUse.length match {
-      case 3 =>
-        if (numbersInUse.sum == 0 && numbersInUse.nonEmpty) dispatch + numbersInUse.toSet
-        else dispatch + Set.empty
-      case _ =>
-        if (availableNumbers.nonEmpty)
-          loop(availableNumbers.tail, availableNumbers.head :: numbersInUse, dispatch) ++ loop(availableNumbers.tail, numbersInUse, dispatch)
-        else
-          Set.empty
-    }
-  loop(numberList, List.empty, Set.empty) - Set.empty
-}
-
-val answer4 = getSets(NUMBERS).size
+val answer4 = NUMBERS_4.combinations(3).count(_.sum == 0)
 
 println(s"#4 - $answer4")
 
